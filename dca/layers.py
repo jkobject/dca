@@ -1,6 +1,6 @@
-from keras.engine.topology import Layer
+from keras.layers import Layer
 from keras.layers import Lambda, Dense
-from keras.engine.base_layer import InputSpec
+from keras.layers import InputSpec
 from keras import backend as K
 import tensorflow as tf
 

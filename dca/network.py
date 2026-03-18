@@ -24,7 +24,7 @@ import keras
 from keras.layers import Input, Dense, Dropout, Activation, BatchNormalization, Lambda
 from keras.models import Model
 from keras.regularizers import l1_l2
-from keras.objectives import mean_squared_error
+from keras.losses import mean_squared_error
 from keras.initializers import Constant
 from keras import backend as K
 
