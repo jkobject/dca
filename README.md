@@ -45,3 +45,32 @@ Use `-h` option to see all available parameters and defaults.
 ### Hyperparameter optimization
 
 You can run the autoencoder with `--hyper` option to perform hyperparameter search.
+
+---
+
+### Fork notes (jkobject/dca)
+
+This is a fork of [theislab/dca](https://github.com/theislab/dca) maintained for use as a submodule in [scPRINT-2](https://github.com/cantinilab/scPRINT-2).
+
+#### What was changed and why
+
+DCA was written for Keras 1.x / early Keras 2.x and uses several APIs that have been removed or relocated in modern versions of Keras (2.12+):
+
+| File | Old import | New import | Reason |
+|------|-----------|------------|--------|
+| `dca/network.py` | `from keras.objectives import mean_squared_error` | `from keras.losses import mean_squared_error` | `keras.objectives` module was removed; losses moved to `keras.losses` |
+| `dca/layers.py` | `from keras.engine.topology import Layer` | `from keras.layers import Layer` | `keras.engine.topology` was deprecated and removed; `Layer` is now directly in `keras.layers` |
+| `dca/layers.py` | `from keras.engine.base_layer import InputSpec` | `from keras.layers import InputSpec` | Same — `keras.engine.base_layer` no longer exists |
+
+These are minimal, non-breaking patches — no logic was changed, only import paths updated to match Keras 2.12 conventions.
+
+#### Usage in scPRINT-2
+
+```python
+import sys
+sys.path.insert(0, "tools/dca")
+from dca.api import dca
+result = dca(adata, copy=True)
+```
+
+Requires a separate Python environment with `tensorflow==2.12.0` and `keras==2.12.0` (incompatible with the main scPRINT-2 environment due to TF version conflicts).
